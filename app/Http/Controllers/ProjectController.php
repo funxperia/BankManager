@@ -9,9 +9,6 @@ use App\Http\Requests;
 use App\Repositories\ProjectRepository;
 
 use App\Http\Requests\DepositRequest;
-use App\Http\Requests\DrawmoneyRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
 class ProjectController extends Controller
 {
@@ -21,70 +18,69 @@ class ProjectController extends Controller
         $this -> val = $val;
     }
 
-    //四种事务前置密码验证：
+
+    public function showDepositVal(){
+        return view('validator/DepositValidation');
+    }
+    public function showDrawmoneyVal(){
+        return view('validator/DrawmoneyValidation');
+    }
+    public function showSelfVal(){
+        return view('validator/SelfValidation');
+    }
+    public function showNoteVal(){
+        return view('validator/NoteValidation');
+    }
+
     public function showDeposit(Request $request){
-        $errors = $this -> val -> passCheck($request);
-        if(empty($errors)){
-            $request -> session() ->put('passcheck', '1');
-            return redirect('/deposit/update');
+        if($this -> val -> passCheck($request)){
+            return view('project/deposit');
         }else{
-            return redirect('/depositval') -> withErrors($errors) -> withInput();
+            $errors['password'] = "密码错误";
+            return view('validator/DepositValidation',compact('errors'));
         }
     }
     public function showDrawmoney(Request $request){
-        $errors = $this -> val -> passCheck($request);
-        if(empty($errors)){
-            $request -> session() ->put('passcheck', '1');
-            return redirect('/drawmoney/update');
+        if($this -> val -> passCheck($request)){
+            return view('project/drawmoney');
         }else{
-            return redirect('/drawmoneyval') -> withErrors($errors) -> withInput();
+            $errors['password'] = "密码错误";
+            return view('validator/DrawmoneyValidation',compact('errors'));
         }
     }
     public function showSelf(Request $request){
-        $errors = $this -> val -> passCheck($request);
-        if(empty($errors)){
-            $request -> session() ->put('passcheck', '1');
-            return redirect('/self');
+        if($this -> val -> passCheck($request)){
+            return view('project/self');
         }else{
-            return redirect('/selfval') -> withErrors($errors) -> withInput();
+            $errors['password'] = "密码错误";
+            return view('validator/SelfValidation',compact('errors'));
         }
     }
     public function showNote(Request $request){
-        $errors = $this -> val -> passCheck($request);
-        if(empty($errors)){
-            $request -> session() ->put('passcheck', '1');
-            return redirect('/note');
+        if($this -> val -> passCheck($request)){
+            return view('project/note');
         }else{
-            return redirect('/noteval') -> withErrors($errors) -> withInput();
+            $errors['password'] = "密码错误";
+            return view('validator/NoteValidation',compact('errors'));
         }
     }
 
-    //存款：
     public function depositUpdate(DepositRequest $request){
         $this -> val -> deposit($request);
-        return redirect('/deposit/success');
+        return Redirect::back();
     }
+/*    public function drawmoneyUpdate(Request $request){
+        if($this -> val ->drawmoney($request))
+            return;
+        else{
+            $errors['drawmoney'] = "您的存款余额不足！";
+            return view('project/drawmoney',compact('errors'));
+        }
+    }*/
+    public function self(){
 
-    //取款：
-    public function drawmoneyUpdate(DrawmoneyRequest $request){
-        $errors = $this -> val ->drawmoney($request);
-        if(empty($errors))
-            return redirect() -> route('drawmoney.success');
-        else
-            return Redirect::back() -> withErrors($errors) -> withInput();
     }
+    public function note(){
 
-    //个人信息：
-    public function self(Request $request){
-        $user = Auth::user() -> get();
-        $request -> session() ->put('passcheck', '0');
-        return view('project/self', compact('user'));
-    }
-
-    //存取记录：
-    public function note(Request $request){
-        $liushui = Auth::user() -> liushuis() -> get();
-        $request -> session() ->put('passcheck', '0');
-        return view('project/note',compact('liushui'));
     }
 }

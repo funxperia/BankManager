@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row" style="margin-top: 80px;">
         <div class="col-md-8 col-md-offset-2">
-            <h1 class="text-primary text-center">欢迎使用6666银行<br><small>请点击下方按钮进行操作</small></h1>
+            <h1 class="text-primary text-center">欢迎使用6666银行<br><small>请点击下方按钮进行操作<br>本银行仅接受人民币业务</small></h1>
         </div>
     </div>
     <div class="row" style="margin-top: 50px;">

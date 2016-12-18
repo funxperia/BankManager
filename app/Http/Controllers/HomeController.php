@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * 实例化auth中间件
      *
      * @return void
      */
@@ -18,12 +18,13 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * 调取系统首页
      *
      * @return \Illuminate\Http\Response
      */
 
-    public function welcome(){
+    public function welcome(Request $request){
+        $request -> session() ->put('passcheck', '0');
         return view('welcome');
     }
 }

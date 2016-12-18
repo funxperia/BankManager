@@ -9,78 +9,132 @@ use App\Http\Requests;
 use App\Repositories\ProjectRepository;
 
 use App\Http\Requests\DepositRequest;
+use App\Http\Requests\DrawmoneyRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class ProjectController extends Controller
 {
+     /*
+    |--------------------------------------------------------------------------
+    | 事务控制器，控制存款取款，密码验证，查询信息事务代码的调配。
+    |--------------------------------------------------------------------------
+    */
 
+    /**
+     * 使用魔术方法实例化事务逻辑类
+     *
+     * @param  ProjectRepository $val
+     * @return  $this -> val
+     */
     protected $val;
     public function __construct(ProjectRepository $val){
         $this -> val = $val;
     }
-
-
-    public function showDepositVal(){
-        return view('validator/DepositValidation');
-    }
-    public function showDrawmoneyVal(){
-        return view('validator/DrawmoneyValidation');
-    }
-    public function showSelfVal(){
-        return view('validator/SelfValidation');
-    }
-    public function showNoteVal(){
-        return view('validator/NoteValidation');
-    }
-
-    public function showDeposit(Request $request){
-        if($this -> val -> passCheck($request)){
-            return view('project/deposit');
+    /**
+     *存款时密码检测
+     *
+     * @param Request $request
+     * @return Redirect
+     */
+    public function valDeposit(Request $request){
+        $errors = $this -> val -> passCheck($request);
+        if(empty($errors)){
+            $request -> session() ->put('passcheck', '1');
+            return redirect('/deposit/update');
         }else{
-            $errors['password'] = "密码错误";
-            return view('validator/DepositValidation',compact('errors'));
+            return redirect('/depositval') -> withErrors($errors) -> withInput();
         }
     }
-    public function showDrawmoney(Request $request){
-        if($this -> val -> passCheck($request)){
-            return view('project/drawmoney');
+    /**
+     *取款时密码检测
+     *
+     * @param Request $request
+     * @return Redirect
+     */
+    public function valDrawmoney(Request $request){
+        $errors = $this -> val -> passCheck($request);
+        if(empty($errors)){
+            $request -> session() ->put('passcheck', '1');
+            return redirect('/drawmoney/update');
         }else{
-            $errors['password'] = "密码错误";
-            return view('validator/DrawmoneyValidation',compact('errors'));
+            return redirect('/drawmoneyval') -> withErrors($errors) -> withInput();
         }
     }
-    public function showSelf(Request $request){
-        if($this -> val -> passCheck($request)){
-            return view('project/self');
+    /**
+     *查询个人信息时密码检测
+     *
+     * @param Request $request
+     * @return Redirect
+     */
+    public function valSelf(Request $request){
+        $errors = $this -> val -> passCheck($request);
+        if(empty($errors)){
+            $request -> session() ->put('passcheck', '1');
+            return redirect('/self');
         }else{
-            $errors['password'] = "密码错误";
-            return view('validator/SelfValidation',compact('errors'));
+            return redirect('/selfval') -> withErrors($errors) -> withInput();
         }
     }
-    public function showNote(Request $request){
-        if($this -> val -> passCheck($request)){
-            return view('project/note');
+    /**
+     *查询存取款记录时密码检测
+     *
+     * @param Request $request
+     * @return Redirect
+     */
+    public function valNote(Request $request){
+        $errors = $this -> val -> passCheck($request);
+        if(empty($errors)){
+            $request -> session() ->put('passcheck', '1');
+            return redirect('/note');
         }else{
-            $errors['password'] = "密码错误";
-            return view('validator/NoteValidation',compact('errors'));
+            return redirect('/noteval') -> withErrors($errors) -> withInput();
         }
     }
-
+    /**
+     * 进行存款
+     *
+     * @param DepositRequest $request
+     * @return Redirect
+    */
     public function depositUpdate(DepositRequest $request){
         $this -> val -> deposit($request);
-        return Redirect::back();
+        return redirect('/deposit/success');
     }
-/*    public function drawmoneyUpdate(Request $request){
-        if($this -> val ->drawmoney($request))
-            return;
-        else{
-            $errors['drawmoney'] = "您的存款余额不足！";
-            return view('project/drawmoney',compact('errors'));
-        }
-    }*/
-    public function self(){
-
+    /**
+     * 进行存款
+     *
+     * @param DrawmoneyRequest $request
+     * @return Redirect
+     */
+    public function drawmoneyUpdate(DrawmoneyRequest $request)
+    {
+        $errors = $this->val->drawmoney($request);
+        if (empty($errors))
+            return redirect()->route('drawmoney.success');
+        else
+            return Redirect::back()->withErrors($errors)->withInput();
     }
-    public function note(){
-
+    /**
+     * 进行个人信息查询
+     *
+     * @param Request $request
+     * @return view
+     */
+    public function self(Request $request){
+        $user = Auth::user() -> get();
+        $request -> session() ->put('passcheck', '0');
+        return view('project/self', compact('user'));
+    }
+    /**
+     * 进行存取款记录查询
+     *
+     * @param Request $request
+     * @return view
+     */
+    public function note(Request $request){
+        $liushui = Auth::user() -> liushuis() -> get();
+        $request -> session() ->put('passcheck', '0');
+        return view('project/note',compact('liushui'));
     }
 }

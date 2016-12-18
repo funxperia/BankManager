@@ -2,28 +2,53 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| 系统路由模块
 |--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
+本系统中，采用中间件检测方法来防止跨URL进行具体事务页面调取以跳过密码验证的行为。
 */
 
-Route::get('/','HomeController@welcome');
+/**
+ *首页路由
+ */
+Route::get('/',['as' => 'index', 'uses' => 'HomeController@welcome']);
 
+/**
+ *登录登出注册路由
+ */
 Route::auth();
 
-Route::get('/depositval','ProjectController@showDepositVal');
-Route::get('/drawmoneyval','ProjectController@showDrawmoneyVal');
-Route::get('/selfval','ProjectController@showSelfVal');
-Route::get('/noteval','ProjectController@showNoteVal');
+/**
+ *个人信息路由
+ */
+Route::get('/selfval',['as' => 'selfval.show', function(){return view('validator/SelfValidation');}]); //调取验证页面
+Route::post('/self',['as' => 'self.passCheck', 'uses' => 'ProjectController@valSelf']); //进行密码检测
+Route::get('/self',['as' => 'self.show','middleware' => 'check', 'uses' => 'ProjectController@self']); //调取信息页面
 
-Route::post('/deposit','ProjectController@showDeposit');
-Route::post('/drawmoney','ProjectController@showDrawmoney');
-Route::post('/self','ProjectController@showSelf');
-Route::post('/note','ProjectController@showNote');
+/**
+ *存取款记录路由
+ */
+Route::get('/noteval',['as' => 'noteval.show', function(){return view('validator/NoteValidation');}]); //调取验证页面
+Route::post('/note',['as' => 'note.passCheck', 'uses' => 'ProjectController@valNote']);//进行密码检测
+Route::get('/note',['as' => 'note.show', 'middleware' => 'check','uses' => 'ProjectController@note']); //调取信息页面
 
-Route::patch('/deposit/update',[ 'as' => 'deposit.update', 'uses' => 'ProjectController@depositUpdate']);
-/*Route::post('/drawmoney/update','ProjectController@drawmoeyUpdate');*/
+/**
+ *存款路由
+ */
+Route::get('/depositval',['as' => 'depositval.show', function(){return view('validator/DepositValidation');}]);//调取验证页面
+Route::post('/deposit',['as' => 'deposit.passCheck', 'uses' => 'ProjectController@valDeposit']);//进行密码检测
+Route::group(['middleware' => 'check'], function () {
+    Route::get('/deposit/update',[ 'as' => 'deposit.show', function(){ return view('project/deposit');}]); //调取存款页面
+    Route::post('/deposit/update',[ 'as' => 'deposit.update', 'uses' => 'ProjectController@depositUpdate']); //进行存款
+});
+Route::get('/deposit/success',['as' => 'deposit.success', function(){return view('success/depositSuccess');}]); //调取存款成功页面
+
+/**
+ *取款路由
+ */
+Route::get('/drawmoneyval',['as' => 'drawmoney.show', function(){return view('validator/DrawmoneyValidation');}]);//调取验证页面
+Route::post('/drawmoney',['as' => 'drawmoney.passCheck', 'uses' => 'ProjectController@valDrawmoney']);//进行密码检测
+Route::group(['middleware' => 'check'], function () {
+    Route::get('/drawmoney/update', ['as' => 'drawmoney.show', function () {return view('project/drawmoney');}]);//调取存款页面
+    Route::post('/drawmoney/update', ['as' => 'drawmoney.update', 'uses' => 'ProjectController@drawmoneyUpdate']);//进行存款
+});
+Route::get('/drawmoney/success',['as' => 'drawmoney.success', function(){return view('success/drawmoneySuccess');}]);//调取存款成功页面

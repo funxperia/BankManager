@@ -72,7 +72,7 @@
                             <div class="col-md-6">
                                 <input id="pincodes" type="text" class="form-control" name="pincodes" value="{{ old('pincodes') }}">
 
-                                @if ($errors->has('ID'))
+                                @if ($errors->has('pincodes'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('pincodes') }}</strong>
                                     </span>

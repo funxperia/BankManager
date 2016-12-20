@@ -15,7 +15,7 @@ class PassCheck
      */
     public function handle($request, Closure $next)
     {
-        if(session('passcheck') == 0)
+        if(session('passCheck') == 0)
             return redirect('/');
         return $next($request);
     }

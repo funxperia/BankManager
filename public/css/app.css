@@ -5742,4 +5742,8 @@ a:hover {
 a:active {
   text-decoration: none; }
 
+body {
+  background: url('/public/images/background.jpg') no-repeat center center fixed;
+  background-size: cover; }
+
 /*# sourceMappingURL=app.css.map */

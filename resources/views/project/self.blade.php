@@ -5,13 +5,13 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" style="margin-top: 80px;">
                         <tr>
                             <th>用户名</th>
                             <th>邮箱</th>
                             <th>身份证</th>
                             <th>电话</th>
-                            <th>余额</th>
+                            <th class="danger">余额</th>
                         </tr>
                         @if($user)
                             @foreach($user as $users)
@@ -20,7 +20,7 @@
                                     <td>{{$users -> email}}</td>
                                     <td>{{$users -> pincodes}}</td>
                                     <td>{{$users -> phone}}</td>
-                                    <td>{{$users -> balance}}</td>
+                                    <td class="danger">{{$users -> balance}}</td>
                                 </tr>
                             @endforeach
                         @endif

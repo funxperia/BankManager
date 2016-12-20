@@ -24,17 +24,17 @@ class DrawmoneyRequest extends Request
     public function rules()
     {
         return [
-            'drawmoney' => 'required|integer|max:5000000|min:1',
+            'drawMoney' => 'required|integer|max:5000000|min:1',
         ];
     }
 
     public function messages()
     {
         return [
-            'drawmoney.required' => '取款金额不可为空',
-            'drawmoney.integer' => '您必须输入整数数值！',
-            'drawmoney.max' => '一次性取款最多能取500万圆！',
-            'drawmoney.min' => '最少取款额度为1圆！',
+            'drawMoney.required' => '取款金额不可为空',
+            'drawMoney.integer' => '您必须输入整数数值！',
+            'drawMoney.max' => '一次性取款最多能取500万圆！',
+            'drawMoney.min' => '最少取款额度为1圆！',
         ];
     }
 }

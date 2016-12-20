@@ -58,7 +58,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/selfval') }}"><i class="fa fa-btn fa-user"></i>个人信息</a></li>
+                                <li><a href="{{ url('/selfval') }}"><i class="fa fa-btn fa-user"></i>个人信息及余额</a></li>
                                 <li><a href="{{ url('/noteval') }}"><i class="fa fa-btn fa-list"></i>存取记录</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>登出</a></li>

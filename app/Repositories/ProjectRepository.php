@@ -50,8 +50,8 @@ class ProjectRepository{
         $user = $this -> con();
         $user['balance'] = $user['balance'] + (int)($request['deposit']);
         $user -> save();
-        $request -> user() -> liushuis() -> create(['status' => '存款', 'operate' => (int)($request['deposit'])]);
-        $request -> session() ->put('passcheck', '0');
+        $request -> user() -> liuShuis() -> create(['status' => '存款', 'operate' => (int)($request['deposit'])]);
+        $request -> session() ->put('passCheck', '0');
     }
     /**
      * 检测用户余额，如果取款数小于等于用户余额，则可以取款，否则不可以取款
@@ -59,9 +59,9 @@ class ProjectRepository{
      * @param  $request
      * @return  bool
      */
-    public function drawcheck($request){
+    public function drawCheck($request){
         $user = $this -> con();
-        if((int)($request['drawmoney']) <= $user['balance'])
+        if((int)($request['drawMoney']) <= $user['balance'])
             return true;
         else
             return false;
@@ -72,17 +72,17 @@ class ProjectRepository{
      * @param  $request
      * @return  void
      */
-    public function drawmoney($request){
+    public function drawMoney($request){
         $user = $this -> con();
-        if($this ->drawcheck($request)){
-            $user['balance'] = $user['balance'] - (int)($request['drawmoney']);
+        if($this ->drawCheck($request)){
+            $user['balance'] = $user['balance'] - (int)($request['drawMoney']);
             $user -> save();
-            $request -> user() -> liushuis() -> create(['status' => '取款', 'operate' => (int)($request['drawmoney'])]);
-            $request -> session() ->put('passcheck', '0');
+            $request -> user() -> liuShuis() -> create(['status' => '取款', 'operate' => (int)($request['drawMoney'])]);
+            $request -> session() ->put('passCheck', '0');
             $errors = null;
             return $errors;
         }else{
-            $errors['drawmoney'] = "您的存款余额不足！";
+            $errors['drawMoney'] = "您的存款余额不足！";
             return $errors;
         }
     }

@@ -4,3 +4,11 @@
  a:visited {  text-decoration: none;  }
  a:hover {  text-decoration: none;  }
  a:active {  text-decoration: none;  }
+
+ body {
+ background: url('/public/images/background.jpg') no-repeat center center fixed;
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ background-size: cover;
+}

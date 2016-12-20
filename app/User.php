@@ -25,8 +25,8 @@ class User extends Authenticatable
     ];
 
 
-    public function liushuis(){
-        //$user -> liushuis
-        return $this -> hasMany('App\Liushui');
+    public function liuShuis(){
+        //$user -> liuShuis
+        return $this -> hasMany('App\LiuShui');
     }
 }

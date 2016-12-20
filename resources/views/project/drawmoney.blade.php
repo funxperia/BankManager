@@ -7,11 +7,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">取款</div>
                     <div class="panel-body">
-                        {!! Form::open(['route' => 'drawmoney.update','method' => 'POST']) !!}
+                        {!! Form::open(['route' => 'drawMoney.update','method' => 'POST']) !!}
                         <div class="form-group">
-                            {!! Form::label('drawmoney','请输入取款金额',['class' => 'control-label col-md-4 text-right']) !!}
+                            {!! Form::label('drawMoney','请输入取款金额',['class' => 'control-label col-md-4 text-right']) !!}
                             <div class="col-md-6">
-                                {!! Form::text('drawmoney',null,['class' => 'form-control']) !!}
+                                {!! Form::text('drawMoney',null,['class' => 'form-control']) !!}
                                 <span class="help-block">请注意，您只可以取整数金额！</span>
                                 @include('errors/1000')
                             </div>

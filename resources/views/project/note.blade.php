@@ -12,13 +12,13 @@
                             <th>数目</th>
                             <th>时间</th>
                         </tr>
-                        @if($liushui)
-                            @foreach($liushui as $liushuis)
+                        @if($liuShui)
+                            @foreach($liuShui as $liuShuis)
                                 <tr>
-                                    <td>{{$liushuis -> id}}</td>
-                                    <td>{{$liushuis -> status}}</td>
-                                    <td>{{$liushuis -> operate}}</td>
-                                    <td>{{$liushuis -> created_at}}</td>
+                                    <td>{{$liuShuis -> id}}</td>
+                                    <td>{{$liuShuis -> status}}</td>
+                                    <td>{{$liuShuis -> operate}}</td>
+                                    <td>{{$liuShuis -> created_at}}</td>
                                 </tr>
                             @endforeach
                         @endif

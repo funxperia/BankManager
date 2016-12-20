@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
 
     public function welcome(Request $request){
-        $request -> session() ->put('passcheck', '0');
+        $request -> session() ->put('passCheck', '0');
         return view('welcome');
     }
 }

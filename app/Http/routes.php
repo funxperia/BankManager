@@ -20,21 +20,21 @@ Route::auth();
 /**
  *个人信息路由
  */
-Route::get('/selfval',['as' => 'selfval.show', function(){return view('validator/SelfValidation');}]); //调取验证页面
+Route::get('/selfval',['as' => 'selfval.show', function(){return view('validator/selfValidation');}]); //调取验证页面
 Route::post('/self',['as' => 'self.passCheck', 'uses' => 'ProjectController@valSelf']); //进行密码检测
 Route::get('/self',['as' => 'self.show','middleware' => 'check', 'uses' => 'ProjectController@self']); //调取信息页面
 
 /**
  *存取款记录路由
  */
-Route::get('/noteval',['as' => 'noteval.show', function(){return view('validator/NoteValidation');}]); //调取验证页面
+Route::get('/noteval',['as' => 'noteval.show', function(){return view('validator/noteValidation');}]); //调取验证页面
 Route::post('/note',['as' => 'note.passCheck', 'uses' => 'ProjectController@valNote']);//进行密码检测
 Route::get('/note',['as' => 'note.show', 'middleware' => 'check','uses' => 'ProjectController@note']); //调取信息页面
 
 /**
  *存款路由
  */
-Route::get('/depositval',['as' => 'depositval.show', function(){return view('validator/DepositValidation');}]);//调取验证页面
+Route::get('/depositval',['as' => 'depositval.show', function(){return view('validator/depositValidation');}]);//调取验证页面
 Route::post('/deposit',['as' => 'deposit.passCheck', 'uses' => 'ProjectController@valDeposit']);//进行密码检测
 Route::group(['middleware' => 'check'], function () {
     Route::get('/deposit/update',[ 'as' => 'deposit.show', function(){ return view('project/deposit');}]); //调取存款页面
@@ -45,10 +45,10 @@ Route::get('/deposit/success',['as' => 'deposit.success', function(){return view
 /**
  *取款路由
  */
-Route::get('/drawmoneyval',['as' => 'drawmoney.show', function(){return view('validator/DrawmoneyValidation');}]);//调取验证页面
-Route::post('/drawmoney',['as' => 'drawmoney.passCheck', 'uses' => 'ProjectController@valDrawmoney']);//进行密码检测
+Route::get('/drawmoneyval',['as' => 'drawmoney.show', function(){return view('validator/drawMoneyValidation');}]);//调取验证页面
+Route::post('/drawmoney',['as' => 'drawmoney.passCheck', 'uses' => 'ProjectController@valDrawMoney']);//进行密码检测
 Route::group(['middleware' => 'check'], function () {
-    Route::get('/drawmoney/update', ['as' => 'drawmoney.show', function () {return view('project/drawmoney');}]);//调取存款页面
-    Route::post('/drawmoney/update', ['as' => 'drawmoney.update', 'uses' => 'ProjectController@drawmoneyUpdate']);//进行存款
+    Route::get('/drawmoney/update', ['as' => 'drawMoney.show', function () {return view('project/drawMoney');}]);//调取存款页面
+    Route::post('/drawmoney/update', ['as' => 'drawMoney.update', 'uses' => 'ProjectController@drawMoneyUpdate']);//进行存款
 });
-Route::get('/drawmoney/success',['as' => 'drawmoney.success', function(){return view('success/drawmoneySuccess');}]);//调取存款成功页面
+Route::get('/drawmoney/success',['as' => 'drawmoney.success', function(){return view('success/drawMoneySuccess');}]);//调取存款成功页面

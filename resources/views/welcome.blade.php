@@ -21,7 +21,7 @@
     </div>
     <div class="row" style="margin-top: 50px;">
         <div class="col-md-8 col-md-offset-2">
-            <h4 class="text-primary text-center">若要查看个人信息和存取记录，请点击右上角用户名查看</h4>
+            <h4 class="text-primary text-center">若要查看个人信息及余额和存取记录，请点击右上角用户名查看</h4>
         </div>
     </div>
 </div>

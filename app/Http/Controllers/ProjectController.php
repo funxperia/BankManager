@@ -40,7 +40,7 @@ class ProjectController extends Controller
     public function valDeposit(Request $request){
         $errors = $this -> val -> passCheck($request);
         if(empty($errors)){
-            $request -> session() ->put('passcheck', '1');
+            $request -> session() ->put('passCheck', '1');
             return redirect('/deposit/update');
         }else{
             return redirect('/depositval') -> withErrors($errors) -> withInput();
@@ -52,10 +52,10 @@ class ProjectController extends Controller
      * @param Request $request
      * @return Redirect
      */
-    public function valDrawmoney(Request $request){
+    public function valDrawMoney(Request $request){
         $errors = $this -> val -> passCheck($request);
         if(empty($errors)){
-            $request -> session() ->put('passcheck', '1');
+            $request -> session() ->put('passCheck', '1');
             return redirect('/drawmoney/update');
         }else{
             return redirect('/drawmoneyval') -> withErrors($errors) -> withInput();
@@ -70,7 +70,7 @@ class ProjectController extends Controller
     public function valSelf(Request $request){
         $errors = $this -> val -> passCheck($request);
         if(empty($errors)){
-            $request -> session() ->put('passcheck', '1');
+            $request -> session() ->put('passCheck', '1');
             return redirect('/self');
         }else{
             return redirect('/selfval') -> withErrors($errors) -> withInput();
@@ -85,7 +85,7 @@ class ProjectController extends Controller
     public function valNote(Request $request){
         $errors = $this -> val -> passCheck($request);
         if(empty($errors)){
-            $request -> session() ->put('passcheck', '1');
+            $request -> session() ->put('passCheck', '1');
             return redirect('/note');
         }else{
             return redirect('/noteval') -> withErrors($errors) -> withInput();
@@ -107,9 +107,9 @@ class ProjectController extends Controller
      * @param DrawmoneyRequest $request
      * @return Redirect
      */
-    public function drawmoneyUpdate(DrawmoneyRequest $request)
+    public function drawMoneyUpdate(DrawmoneyRequest $request)
     {
-        $errors = $this->val->drawmoney($request);
+        $errors = $this->val->drawMoney($request);
         if (empty($errors))
             return redirect()->route('drawmoney.success');
         else
@@ -123,7 +123,7 @@ class ProjectController extends Controller
      */
     public function self(Request $request){
         $user = Auth::user() -> get();
-        $request -> session() ->put('passcheck', '0');
+        $request -> session() ->put('passCheck', '0');
         return view('project/self', compact('user'));
     }
     /**
@@ -133,8 +133,8 @@ class ProjectController extends Controller
      * @return view
      */
     public function note(Request $request){
-        $liushui = Auth::user() -> liushuis() -> get();
-        $request -> session() ->put('passcheck', '0');
-        return view('project/note',compact('liushui'));
+        $liuShui = Auth::user() -> liuShuis() -> get();
+        $request -> session() ->put('passCheck', '0');
+        return view('project/note',compact('liuShui'));
     }
 }
